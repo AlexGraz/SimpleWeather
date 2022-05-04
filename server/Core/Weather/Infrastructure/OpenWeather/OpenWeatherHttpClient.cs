@@ -1,8 +1,9 @@
-﻿using Microsoft.AspNetCore.Http.Extensions;
+﻿using System.Net.Http.Json;
+using Microsoft.AspNetCore.Http.Extensions;
 
 namespace Core.Weather.Infrastructure.OpenWeather;
 
-public class OpenWeatherHttpClient: IWeatherHttpClient
+public class OpenWeatherHttpClient : IWeatherHttpClient
 {
     private readonly HttpClient _httpClient;
     private const string BaseUri = "https://api.openweathermap.org/data/2.5/weather";
@@ -25,8 +26,19 @@ public class OpenWeatherHttpClient: IWeatherHttpClient
             { "lang", Language },
             { "appid", ApiKey }
         };
+
+        var response = await _httpClient.GetFromJsonAsync<OpenWeatherResponseDto>(query.ToString());
+
+        if (response == null) throw new NullReferenceException("Response from OpenWeather was null");
         
-        // return await _httpClient.GetFromJsonAsync<OpenWeatherResponseDto>(query.ToString());
-        return new WeatherDto();
+        var weatherMain = response.Weather.Length > 0 ? response.Weather[0] : null;
+        
+        return new WeatherDto(
+            weatherMain?.Main,
+            weatherMain?.Description,
+            response.Main.Temp,
+            response.Main.TempMax,
+            response.Main.TempMin
+        );
     }
 }

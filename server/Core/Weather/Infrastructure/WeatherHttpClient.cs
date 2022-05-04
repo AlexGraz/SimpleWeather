@@ -2,7 +2,7 @@
 
 namespace Core.Weather.Infrastructure;
 
-public class WeatherHttpClient : OpenWeatherHttpClient, IWeatherHttpClient
+public class WeatherHttpClient : OpenWeatherHttpClient
 {
     public WeatherHttpClient(HttpClient httpClient) : base(httpClient)
     {
