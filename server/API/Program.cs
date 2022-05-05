@@ -1,4 +1,4 @@
-using System.Reflection;
+using Core.Weather.Infrastructure;
 using MediatR;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -6,7 +6,9 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 
 builder.Services.AddControllers();
-builder.Services.AddMediatR(Assembly.GetExecutingAssembly());
+builder.Services.AddMediatR(AppDomain.CurrentDomain.GetAssemblies());
+builder.Services.AddHttpClient();
+builder.Services.AddTransient<IWeatherService, WeatherService>();
 
 var app = builder.Build();
 
@@ -21,9 +23,6 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseRouting();
 
-
-app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller}/{action=Index}/{id?}");
+app.MapControllers();
 
 app.Run();
