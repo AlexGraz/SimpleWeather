@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Http.Extensions;
 
 namespace Core.Weather.Infrastructure.OpenWeather;
 
-public class OpenWeatherHttpClient : IWeatherHttpClient
+public class OpenWeatherService : IWeatherService
 {
     private readonly HttpClient _httpClient;
     private const string BaseUri = "https://api.openweathermap.org/data/2.5/weather";
@@ -11,13 +11,13 @@ public class OpenWeatherHttpClient : IWeatherHttpClient
     private const string Language = "en";
     private const string ApiKey = "8b7535b42fe1c551f18028f64e8688f7";
 
-    public OpenWeatherHttpClient(HttpClient httpClient)
+    public OpenWeatherService(HttpClient httpClient)
     {
         _httpClient = httpClient;
         _httpClient.BaseAddress = new Uri(BaseUri);
     }
 
-    public async Task<WeatherDto> GetCurrent(string cityName, string countryName)
+    public async Task<WeatherConditionDto> GetConditionDescriptionAsync(string cityName, string countryName)
     {
         var query = new QueryBuilder
         {
@@ -30,15 +30,9 @@ public class OpenWeatherHttpClient : IWeatherHttpClient
         var response = await _httpClient.GetFromJsonAsync<OpenWeatherResponseDto>(query.ToString());
 
         if (response == null) throw new NullReferenceException("Response from OpenWeather was null");
-        
-        var weatherMain = response.Weather.Length > 0 ? response.Weather[0] : null;
-        
-        return new WeatherDto(
-            weatherMain?.Main,
-            weatherMain?.Description,
-            response.Main.Temp,
-            response.Main.TempMax,
-            response.Main.TempMin
+
+        return new WeatherConditionDto(
+            response.Weather.FirstOrDefault()?.Description ?? "No weather conditions found"
         );
     }
 }

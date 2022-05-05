@@ -1,26 +1,24 @@
 ﻿namespace Core.Weather.Infrastructure.OpenWeather;
 
 public record OpenWeatherResponseDto(
-    OpenWeatherCoordinatesDto Coordinates,
+    OpenWeatherCoordinatesDto Coord,
     OpenWeatherWeatherDto[] Weather,
-    string Base,
     OpenWeatherMainDto Main,
     int Visibility,
     OpenWeatherWindDto Wind,
     OpenWeatherCloudsDto Clouds,
     OpenWeatherVolumeDto? Rain,
     OpenWeatherVolumeDto? Snow,
-    DateTimeOffset TimeOfDataCalculation,
+    int Dt,
     OpenWeatherSystemDto System,
-    TimeZoneInfo TimeZone,
+    int Timezone,
     int Id,
-    string Name,
-    int Cod
+    string Name
 );
 
 public record OpenWeatherCoordinatesDto(
-    string Longitude,
-    string Latitude
+    float Lon,
+    float Lat
 );
 
 public record OpenWeatherWeatherDto(
@@ -41,11 +39,11 @@ public record OpenWeatherMainDto(
 
 public record OpenWeatherWindDto(
     float Speed,
-    int DirectionDegrees
+    int Deg
 );
 
 public record OpenWeatherCloudsDto(
-    int Cloudiness
+    int All
 );
 
 public record OpenWeatherVolumeDto(
@@ -54,8 +52,6 @@ public record OpenWeatherVolumeDto(
 );
 
 public record OpenWeatherSystemDto(
-    int Type,
-    int Id,
     string Country,
     DateTimeOffset Sunrise,
     DateTimeOffset Sunset
