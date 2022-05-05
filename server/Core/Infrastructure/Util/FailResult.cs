@@ -14,6 +14,9 @@ public class FailResult<TSuccess> : Result<TSuccess>
     
     public FailResult(string message, int statusCode): base(statusCode)
     {
+        if (statusCode is >= 200 and <= 299)
+            throw new InvalidOperationException("A FailResult must have a fail code");
+        
         Message = message;
     }
 }
