@@ -17,6 +17,7 @@ public class WeatherController : ApiControllerBase
     }
 
     [HttpGet]
-    public Task<Result<WeatherConditionDto>> GetCurrent(
-        [FromQuery] GetCurrentWeatherQuery query) => _mediator.Send(query);
+    public Task<Result<WeatherConditionDto>> GetWeatherConditionDescription(
+        [FromQuery] GetWeatherConditionDescriptionQuery conditionDescriptionQuery) =>
+        _mediator.Send(conditionDescriptionQuery);
 }
