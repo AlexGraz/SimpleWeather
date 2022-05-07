@@ -1,4 +1,4 @@
-﻿namespace Core.Weather.Infrastructure.OpenWeather;
+﻿namespace Features.Weather.Infrastructure.OpenWeather;
 
 public record OpenWeatherResponseDto(
     OpenWeatherCoordinatesDto Coord,

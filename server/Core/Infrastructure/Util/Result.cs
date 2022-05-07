@@ -1,37 +1,24 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
+using TeeSquare.UnionTypes;
 
 namespace Core.Infrastructure.Util;
 
-public record ErrorResponseDto(
-    ErrorDto Error
-);
-
-public record ErrorDto(
-    string Message
-);
-
-public class Result<TSuccess> : IActionResult
+[UnionType(typeof(SuccessResult<>), typeof(FailResult<>))]
+public class Result<TSuccess> : ActionResult, IStatusCodeActionResult
 {
-    public int StatusCode { get; }
-    public bool IsSuccessful => StatusCode is >= 200 and <= 299;
+    public int? StatusCode { get; }
 
     protected Result(int statusCode)
     {
         StatusCode = statusCode;
     }
     
-    public async Task ExecuteResultAsync(ActionContext context)
+    public override void ExecuteResult(ActionContext context)
     {
-        var objectResult = new ObjectResult(IsSuccessful
-            ? SuccessResult()
-            : new ErrorResponseDto(new ErrorDto(FailMessage()))
-        )
-        {
-            StatusCode = StatusCode
-        };
-
-        await objectResult.ExecuteResultAsync(context);
+        var objectResult = new ObjectResult(this);
+        objectResult.ExecuteResultAsync(context);
     }
 
     public static Result<T> Success<T>(T value)
@@ -65,7 +52,7 @@ public class Result<TSuccess> : IActionResult
     }
     
     public TSuccess SuccessResult() => this is SuccessResult<TSuccess> success
-        ? success.Value
+        ? success.Data
         : throw new InvalidOperationException("Result is not successful");
     
     public string FailMessage() => this is FailResult<TSuccess> failure

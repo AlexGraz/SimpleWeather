@@ -1,4 +1,4 @@
-﻿namespace Core.Weather.Infrastructure;
+﻿namespace Features.Weather.Infrastructure;
 
 public interface IWeatherService
 {

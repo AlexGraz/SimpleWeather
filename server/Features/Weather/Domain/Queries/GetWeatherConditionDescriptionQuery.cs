@@ -1,8 +1,8 @@
 ﻿using Core.Infrastructure.Util;
-using Core.Weather.Infrastructure;
+using Features.Weather.Infrastructure;
 using MediatR;
 
-namespace Core.Weather.Domain.Queries;
+namespace Features.Weather.Domain.Queries;
 
 public record GetWeatherConditionDescriptionQuery(string CityName, string CountryName) : IRequest<Result<WeatherConditionDto>>;
 

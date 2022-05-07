@@ -1,4 +1,4 @@
-using Core.Weather.Infrastructure;
+using Features.Weather.Infrastructure;
 using MediatR;
 
 var builder = WebApplication.CreateBuilder(args);

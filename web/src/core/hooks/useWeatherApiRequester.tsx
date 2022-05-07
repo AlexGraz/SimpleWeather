@@ -1,37 +1,38 @@
 import { useCallback, useMemo, useState } from "react";
-import { Result, SuccessResult } from "core/api/WeatherApiFactory";
-import { AxiosResponse } from "axios";
+import axios, { AxiosResponse } from "axios";
+import { GetRequest, Result } from "code-gen/api-definitions";
 
-export function useWeatherApiRequester<T, TPayload>(
-  api: (payload: TPayload) => Promise<AxiosResponse<Result<T>>>
+export function useWeatherApiRequester<T, TQuery>(
+  apiConfig: (conditionDescriptionQuery: TQuery) => GetRequest<Result<T>>
 ) {
   const [response, setResponse] = useState<AxiosResponse<Result<T>>>();
   const [loading, setLoading] = useState<boolean>(false);
 
   const getData = useCallback(
-    async (payload: TPayload) => {
+    async (query: TQuery) => {
       setLoading(true);
-      setResponse(await api(payload));
+
+      let config = apiConfig(query);
+      let response = await axios(config.url, {
+        method: config.method,
+      });
+
+      setResponse(response);
       setLoading(false);
     },
-    [api]
+    [apiConfig]
   );
 
   return useMemo(
     () => ({
-      data:
-        response && isSuccessful(response.data) ? response?.data : undefined,
+      data: response && response.data.isSuccessful ? response?.data : undefined,
       error:
-        response && !isSuccessful(response.data)
-          ? response?.data.error.message
+        response && !response.data.isSuccessful
+          ? response?.data.message
           : undefined,
       loading,
       getData: getData,
     }),
     [getData, loading, response]
   );
-}
-
-function isSuccessful<T>(result: Result<T>): result is SuccessResult<T> {
-  return !Object.prototype.hasOwnProperty.call(result, "error");
 }

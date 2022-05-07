@@ -1,9 +1,12 @@
 ﻿using Microsoft.AspNetCore.Http;
+using TeeSquare.UnionTypes;
 
 namespace Core.Infrastructure.Util;
 
 public class FailResult<TSuccess> : Result<TSuccess>
 {
+    [AsConst(false)]
+    public bool IsSuccessful => false;
     public string Message { get; }
 
     public FailResult(string message): base(StatusCodes.Status400BadRequest)
@@ -14,7 +17,7 @@ public class FailResult<TSuccess> : Result<TSuccess>
     public FailResult(string message, int statusCode): base(statusCode)
     {
         if (statusCode is >= 200 and <= 299)
-            throw new InvalidOperationException("A FailResult must have a fail code");
+            throw new ArgumentException("A FailResult must have a fail code");
         
         Message = message;
     }

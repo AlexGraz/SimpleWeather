@@ -1,21 +1,24 @@
 ﻿using Microsoft.AspNetCore.Http;
+using TeeSquare.UnionTypes;
 
 namespace Core.Infrastructure.Util;
 
 public class SuccessResult<TSuccess> : Result<TSuccess>
 {
-    public TSuccess Value { get; }
+    [AsConst(true)]
+    public bool IsSuccessful => true;
+    public TSuccess Data { get; }
 
     public SuccessResult(TSuccess val) : base(StatusCodes.Status200OK)
     {
-        Value = val;
+        Data = val;
     }
 
     public SuccessResult(TSuccess val, int statusCode) : base(statusCode)
     {
         if (statusCode is <= 199 or >= 300)
-            throw new InvalidOperationException("A SuccessResult must have a successful code");
+            throw new ArgumentException("A SuccessResult must have a successful code");
         
-        Value = val;
+        Data = val;
     }
 }

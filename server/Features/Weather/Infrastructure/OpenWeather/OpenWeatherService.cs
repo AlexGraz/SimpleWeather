@@ -1,7 +1,7 @@
 ﻿using System.Net.Http.Json;
 using Microsoft.AspNetCore.Http.Extensions;
 
-namespace Core.Weather.Infrastructure.OpenWeather;
+namespace Features.Weather.Infrastructure.OpenWeather;
 
 public class OpenWeatherService : IWeatherService
 {

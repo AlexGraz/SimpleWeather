@@ -1,6 +1,6 @@
-﻿using Core.Weather.Infrastructure.OpenWeather;
+﻿using Features.Weather.Infrastructure.OpenWeather;
 
-namespace Core.Weather.Infrastructure;
+namespace Features.Weather.Infrastructure;
 
 public class WeatherService : OpenWeatherService
 {
