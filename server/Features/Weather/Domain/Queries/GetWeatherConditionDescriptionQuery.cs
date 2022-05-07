@@ -1,12 +1,16 @@
 ﻿using Core.Infrastructure.Util;
+using Features.Weather.Domain.Dtos;
 using Features.Weather.Infrastructure;
 using MediatR;
 
 namespace Features.Weather.Domain.Queries;
 
-public record GetWeatherConditionDescriptionQuery(string CityName, string CountryName) : IRequest<Result<WeatherConditionDto>>;
+public record GetWeatherConditionDescriptionQuery
+    (string CityName, string CountryName) : IRequest<Result<WeatherConditionDto>>;
 
-public class GetWeatherConditionDescriptionQueryHandler : IRequestHandler<GetWeatherConditionDescriptionQuery, Result<WeatherConditionDto>>
+public class
+    GetWeatherConditionDescriptionQueryHandler : IRequestHandler<GetWeatherConditionDescriptionQuery,
+        Result<WeatherConditionDto>>
 {
     private IWeatherService _weatherService;
 
@@ -18,6 +22,7 @@ public class GetWeatherConditionDescriptionQueryHandler : IRequestHandler<GetWea
     public async Task<Result<WeatherConditionDto>> Handle(GetWeatherConditionDescriptionQuery request,
         CancellationToken cancellationToken)
     {
-        return await _weatherService.GetConditionDescriptionAsync(request.CityName, request.CountryName);
+        return new WeatherConditionDto(
+            await _weatherService.GetConditionDescriptionAsync(request.CityName, request.CountryName));
     }
 }

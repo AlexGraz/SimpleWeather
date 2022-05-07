@@ -17,7 +17,7 @@ public class OpenWeatherService : IWeatherService
         _httpClient.BaseAddress = new Uri(BaseUri);
     }
 
-    public async Task<WeatherConditionDto> GetConditionDescriptionAsync(string cityName, string countryName)
+    public async Task<string> GetConditionDescriptionAsync(string cityName, string countryName)
     {
         var query = new QueryBuilder
         {
@@ -31,8 +31,6 @@ public class OpenWeatherService : IWeatherService
 
         if (response == null) throw new NullReferenceException("Response from OpenWeather was null");
 
-        return new WeatherConditionDto(
-            response.Weather.FirstOrDefault()?.Description ?? "No weather conditions found"
-        );
+        return response.Weather.FirstOrDefault()?.Description ?? "No weather conditions found";
     }
 }

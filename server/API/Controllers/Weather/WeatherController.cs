@@ -1,6 +1,6 @@
 ﻿using Core.Infrastructure.Util;
+using Features.Weather.Domain.Dtos;
 using Features.Weather.Domain.Queries;
-using Features.Weather.Infrastructure;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
