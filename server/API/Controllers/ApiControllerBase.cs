@@ -1,8 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using API.Infrastructure.Authorisation;
+using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers;
 
-[ApiController]
+[ApiController, KeyAuthorize]
 public abstract class ApiControllerBase : ControllerBase
 {
     protected ApiControllerBase()

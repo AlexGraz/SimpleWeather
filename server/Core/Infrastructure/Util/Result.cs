@@ -6,7 +6,7 @@ using TeeSquare.UnionTypes;
 namespace Core.Infrastructure.Util;
 
 [UnionType(typeof(SuccessResult<>), typeof(FailResult<>))]
-public class Result<TSuccess> : ActionResult, IStatusCodeActionResult
+public class Result<TSuccess> : ActionResult
 {
     public int? StatusCode { get; }
 
@@ -17,7 +17,11 @@ public class Result<TSuccess> : ActionResult, IStatusCodeActionResult
     
     public override void ExecuteResult(ActionContext context)
     {
-        var objectResult = new ObjectResult(this);
+        var objectResult = new ObjectResult(this)
+        {
+            StatusCode = StatusCode
+        };
+        
         objectResult.ExecuteResultAsync(context);
     }
 

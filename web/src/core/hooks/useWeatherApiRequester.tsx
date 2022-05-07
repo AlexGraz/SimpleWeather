@@ -15,6 +15,9 @@ export function useWeatherApiRequester<T, TQuery>(
       let config = apiConfig(query);
       let response = await axios(config.url, {
         method: config.method,
+        headers: {
+          Authorization: `Bearer 1f2eb11d-6fa8-41de-89f7-f0b99adedba6`,
+        },
       });
 
       setResponse(response);

@@ -1,3 +1,4 @@
+using API.Infrastructure.Authorisation;
 using Features.Weather.Infrastructure;
 using MediatR;
 
@@ -9,6 +10,7 @@ builder.Services.AddControllers();
 builder.Services.AddMediatR(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddHttpClient();
 builder.Services.AddTransient<IWeatherService, WeatherService>();
+ApiKeyStore.InitKeysFromConfiguration(builder.Configuration);
 
 var app = builder.Build();
 
