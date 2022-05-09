@@ -2,6 +2,7 @@
 using System.Security.Claims;
 using System.Security.Principal;
 using System.Text.Encodings.Web;
+using API.Infrastructure.Filters;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.Extensions.Options;
 
@@ -22,8 +23,8 @@ public class ApiKeyAuthHandler : AuthenticationHandler<ApiKeyAuthHandlerOptions>
         var apiKeyOptions = options.CurrentValue;
         ApiKeyStore.InitKeys(
             apiKeyOptions.ApiKeys,
-            ApiKeyAuthHandlerOptions.DefaultRequestLimit,
-            ApiKeyAuthHandlerOptions.DefaultRequestLimitPeriodHours
+            RateLimit.DefaultRequestLimit,
+            RateLimit.DefaultRequestLimitPeriodHours
         );
     }
 

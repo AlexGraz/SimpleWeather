@@ -18,8 +18,5 @@
   &lt;/TestAncestor&gt;&#xD;
 &lt;/SessionState&gt;</s:String>
 	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=7a518561_002Daecb_002D477d_002D84f0_002D8a92ea121cf9/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="FilterTests" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
-  &lt;TestAncestor&gt;&#xD;
-    &lt;TestId&gt;NUnit3x::E2AFBA0D-B653-49D9-A086-BB7DF9500EAC::net6.0::Test.Infrastructure.Filters.FilterTests&lt;/TestId&gt;&#xD;
-    &lt;TestId&gt;NUnit3x::E2AFBA0D-B653-49D9-A086-BB7DF9500EAC::net6.0::Test.Api.Controllers.WeatherControllerTests.ControllerSetup&lt;/TestId&gt;&#xD;
-  &lt;/TestAncestor&gt;&#xD;
+  &lt;Project Location="C:\Users\cousi\RiderProjects\JBHifiWeather\server\Test" Presentation="&amp;lt;Test&amp;gt;" /&gt;&#xD;
 &lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>

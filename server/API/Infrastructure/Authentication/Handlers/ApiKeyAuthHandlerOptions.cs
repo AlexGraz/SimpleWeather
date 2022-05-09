@@ -4,9 +4,6 @@ namespace API.Infrastructure.Authentication.Handlers;
 
 public class ApiKeyAuthHandlerOptions : AuthenticationSchemeOptions
 {
-    public const int DefaultRequestLimit = 5;
-    public const int DefaultRequestLimitPeriodHours = 1;
-
     public readonly string[] ApiKeys =
     {
         "1f2eb11d-6fa8-41de-89f7-f0b99adedba6", 
