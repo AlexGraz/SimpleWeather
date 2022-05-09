@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
+using System.Threading.Tasks;
 using API.Infrastructure.Authentication;
 using API.Infrastructure.Authentication.Handlers;
 using API.Infrastructure.Filters;
@@ -78,5 +79,22 @@ public class FilterTests
         }
 
         Assert.IsNotNull(context.Result);
+    }
+    
+    [Test]
+    public async Task RateLimitZeroHourTest()
+    {
+        const int requestLimit = 1;
+        const double requestLimitPeriodHours = 0;
+
+        var context = CreateActionExecutingContext(new ApiKeyAuthHandlerOptions().ApiKeys.First(), requestLimit, requestLimitPeriodHours);
+        var rateLimit = new RateLimit();
+        
+        for (var i = 0; i < requestLimit + 5; i++)
+        {
+            rateLimit.OnActionExecuting(context);
+        }
+
+        Assert.IsNull(context.Result);
     }
 }
