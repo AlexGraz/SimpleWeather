@@ -30,16 +30,16 @@ export function WeatherBody({
 }) {
   return (
     <Container>
-      <InnerContainer>
-        <Spin spinning={loading}>
+      <Spin spinning={loading} size={"large"}>
+        <InnerContainer>
           <WeatherVisual weatherCondition={weatherCondition} />
           <Title
             style={{ color: "white", width: "fit-content", margin: "0 auto" }}
           >
             {weatherCondition?.description}
           </Title>
-        </Spin>
-      </InnerContainer>
+        </InnerContainer>
+      </Spin>
     </Container>
   );
 }
