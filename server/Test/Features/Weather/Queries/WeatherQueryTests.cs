@@ -1,5 +1,4 @@
-﻿using System;
-using System.Net.Http;
+﻿using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using Core.Infrastructure.Util;
@@ -9,17 +8,17 @@ using Features.Weather.Infrastructure;
 using Microsoft.AspNetCore.Http;
 using NUnit.Framework;
 
-namespace Test.Weather.Queries;
+namespace Test.Features.Weather.Queries;
 
 public class WeatherQueryTests
 {
     private readonly IWeatherService _weatherService = new WeatherService(new HttpClient());
 
-    private async Task<Result<WeatherConditionDto>> RunGetWeatherConditionDescriptionQuery(string CityName, string CountryName)
+    private async Task<Result<WeatherConditionDto>> RunGetWeatherConditionDescriptionQuery(string cityName, string countryName)
     {
         var queryHandler = new GetWeatherConditionDescriptionQueryHandler(_weatherService);
         return await queryHandler.Handle(
-            new GetWeatherConditionDescriptionQuery(CityName, CountryName),
+            new GetWeatherConditionDescriptionQuery(cityName, countryName),
             CancellationToken.None
         );
     }
