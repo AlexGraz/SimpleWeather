@@ -1,6 +1,9 @@
-﻿namespace Features.Weather.Infrastructure;
+﻿using Core.Infrastructure.Util;
+using Features.Weather.Domain.Dtos;
+
+namespace Features.Weather.Infrastructure;
 
 public interface IWeatherService
 {
-    public Task<string> GetConditionDescriptionAsync(string cityName, string countryName);
+    public Task<Result<WeatherConditionDto>> GetConditionDescriptionAsync(string cityName, string countryName);
 }

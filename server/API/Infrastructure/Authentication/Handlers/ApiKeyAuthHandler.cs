@@ -20,8 +20,8 @@ public class ApiKeyAuthHandler : AuthenticationHandler<ApiKeyAuthHandlerOptions>
         var apiKeyOptions = options.CurrentValue;
         ApiKeyStore.InitKeys(
             apiKeyOptions.ApiKeys,
-            apiKeyOptions.DefaultRequestLimit,
-            apiKeyOptions.DefaultRequestLimitPeriodHours
+            ApiKeyAuthHandlerOptions.DefaultRequestLimit,
+            ApiKeyAuthHandlerOptions.DefaultRequestLimitPeriodHours
         );
     }
 

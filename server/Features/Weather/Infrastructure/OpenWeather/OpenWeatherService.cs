@@ -1,4 +1,9 @@
-﻿using System.Net.Http.Json;
+﻿using System.Net;
+using System.Net.Http.Json;
+using Core.Infrastructure.Util;
+using Features.Weather.Domain.Dtos;
+using MediatR;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Extensions;
 
 namespace Features.Weather.Infrastructure.OpenWeather;
@@ -17,8 +22,9 @@ public class OpenWeatherService : IWeatherService
         _httpClient.BaseAddress = new Uri(BaseUri);
     }
 
-    public async Task<string> GetConditionDescriptionAsync(string cityName, string countryName)
+    public async Task<Result<WeatherConditionDto>> GetConditionDescriptionAsync(string cityName, string countryName)
     {
+        OpenWeatherResponseDto? response;
         var query = new QueryBuilder
         {
             { "q", $"{cityName},{countryName}" },
@@ -27,10 +33,20 @@ public class OpenWeatherService : IWeatherService
             { "appid", ApiKey }
         };
 
-        var response = await _httpClient.GetFromJsonAsync<OpenWeatherResponseDto>(query.ToString());
+        try
+        {
+            response = await _httpClient.GetFromJsonAsync<OpenWeatherResponseDto>(query.ToString());
+        }
+        catch (HttpRequestException e)
+        {
+            return e.StatusCode == HttpStatusCode.NotFound
+                ? Result<Unit>.Fail("City and Country not found, please try again", StatusCodes.Status404NotFound)
+                : Result<Unit>.Fail("An unknown error occured",
+                    e.StatusCode == null ? StatusCodes.Status500InternalServerError : (int)e.StatusCode);
+        }
 
         if (response == null) throw new NullReferenceException("Response from OpenWeather was null");
 
-        return response.Weather.FirstOrDefault()?.Description ?? "No weather conditions found";
+        return new WeatherConditionDto(response.Weather.FirstOrDefault()?.Description ?? "No weather conditions found");
     }
 }
