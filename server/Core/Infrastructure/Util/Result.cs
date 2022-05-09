@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using TeeSquare.UnionTypes;
@@ -35,9 +36,9 @@ public class Result<TSuccess> : ActionResult
         return new SuccessResult<T>(value, statusCode);
     }
     
-    public static FailResult<Unit> Fail(string message)
+    public static FailResult<Unit> Fail(string message, int statusCode)
     {
-        return new FailResult<Unit>(message);
+        return new FailResult<Unit>(message, statusCode);
     }
     
     public static Result<T> Fail<T>(string message)

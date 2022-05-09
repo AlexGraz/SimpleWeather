@@ -1,4 +1,5 @@
-using API.Infrastructure.Authorisation;
+using API.Infrastructure.Authentication.Constants;
+using API.Infrastructure.Authentication.Handlers;
 using Features.Weather.Infrastructure;
 using MediatR;
 
@@ -6,11 +7,13 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
+builder.Services.AddAuthentication(AuthScheme.ApiKey)
+    .AddScheme<ApiKeyAuthHandlerOptions, ApiKeyAuthHandler>(AuthScheme.ApiKey, null);
+
 builder.Services.AddControllers();
 builder.Services.AddMediatR(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddHttpClient();
 builder.Services.AddTransient<IWeatherService, WeatherService>();
-ApiKeyStore.InitKeysFromConfiguration(builder.Configuration);
 
 var app = builder.Build();
 
@@ -24,6 +27,9 @@ if (!app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseRouting();
+
+app.UseAuthentication();
+app.UseAuthorization();
 
 app.MapControllers();
 
