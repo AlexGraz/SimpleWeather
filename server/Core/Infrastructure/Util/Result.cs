@@ -1,7 +1,6 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Infrastructure;
 using TeeSquare.UnionTypes;
 
 namespace Core.Infrastructure.Util;
@@ -10,6 +9,7 @@ namespace Core.Infrastructure.Util;
 public class Result<TSuccess> : ActionResult
 {
     public int? StatusCode { get; }
+    public virtual bool IsSuccessful { get; }
 
     protected Result(int statusCode)
     {
@@ -48,7 +48,7 @@ public class Result<TSuccess> : ActionResult
     
     public static implicit operator Result<TSuccess>(FailResult<Unit> failure)
     {
-        return new FailResult<TSuccess>(failure.Message);
+        return new FailResult<TSuccess>(failure.Message, failure.StatusCode ?? StatusCodes.Status400BadRequest);
     }
     
     public static implicit operator Result<TSuccess>(TSuccess successValue)

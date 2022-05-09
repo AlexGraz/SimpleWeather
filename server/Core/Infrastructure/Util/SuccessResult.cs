@@ -6,7 +6,7 @@ namespace Core.Infrastructure.Util;
 public class SuccessResult<TSuccess> : Result<TSuccess>
 {
     [AsConst(true)]
-    public bool IsSuccessful => true;
+    public override bool IsSuccessful => true;
     public TSuccess Data { get; }
 
     public SuccessResult(TSuccess val) : base(StatusCodes.Status200OK)

@@ -19,8 +19,10 @@ public class
         _weatherService = weatherService;
     }
 
-    public async Task<Result<WeatherConditionDto>> Handle(GetWeatherConditionDescriptionQuery request,
-        CancellationToken cancellationToken)
+    public async Task<Result<WeatherConditionDto>> Handle(
+        GetWeatherConditionDescriptionQuery request,
+        CancellationToken cancellationToken
+    )
     {
         return await _weatherService.GetConditionDescriptionAsync(request.CityName, request.CountryName);
     }

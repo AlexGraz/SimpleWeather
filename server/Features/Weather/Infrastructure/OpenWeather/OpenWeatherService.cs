@@ -39,10 +39,21 @@ public class OpenWeatherService : IWeatherService
         }
         catch (HttpRequestException e)
         {
-            return e.StatusCode == HttpStatusCode.NotFound
-                ? Result<Unit>.Fail("City and Country not found, please try again", StatusCodes.Status404NotFound)
-                : Result<Unit>.Fail("An unknown error occured",
-                    e.StatusCode == null ? StatusCodes.Status500InternalServerError : (int)e.StatusCode);
+            return e.StatusCode switch
+            {
+                HttpStatusCode.NotFound => Result<Unit>.Fail(
+                    "City and Country not found, please try again",
+                    StatusCodes.Status404NotFound
+                ),
+                HttpStatusCode.BadRequest => Result<Unit>.Fail(
+                    "An invalid request was sent to OpenWeather",
+                    StatusCodes.Status400BadRequest
+                ),
+                _ => Result<Unit>.Fail(
+                    "An unknown error occured",
+                    e.StatusCode == null ? StatusCodes.Status500InternalServerError : (int)e.StatusCode
+                )
+            };
         }
 
         if (response == null) throw new NullReferenceException("Response from OpenWeather was null");

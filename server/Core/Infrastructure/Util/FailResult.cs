@@ -6,7 +6,7 @@ namespace Core.Infrastructure.Util;
 public class FailResult<TSuccess> : Result<TSuccess>
 {
     [AsConst(false)]
-    public bool IsSuccessful => false;
+    public override bool IsSuccessful => false;
     public string Message { get; }
 
     public FailResult(string message): base(StatusCodes.Status400BadRequest)
