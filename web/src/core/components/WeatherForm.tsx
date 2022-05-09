@@ -1,23 +1,41 @@
 import { Button, Form, Input } from "antd";
 import React from "react";
 import { GetWeatherConditionDescriptionQuery } from "code-gen/api-definitions";
+import styled from "styled-components";
+
+const FormItemContainer = styled.div`
+  display: flex;
+  gap: 1rem;
+`;
 
 export function WeatherForm({
   onFinish,
 }: {
   onFinish(values: GetWeatherConditionDescriptionQuery): void;
 }) {
+  const itemStyle = { margin: 0, width: "20rem" };
+
   return (
-    <>
-      <Form onFinish={onFinish} layout={"inline"}>
-        <Form.Item name={"CityName"} label={"City"}>
+    <Form onFinish={onFinish} layout={"inline"}>
+      <FormItemContainer>
+        <Form.Item
+          name={"CityName"}
+          label={"City"}
+          rules={[{ required: true, message: "City name is required" }]}
+          style={itemStyle}
+        >
           <Input placeholder={"Name"} />
         </Form.Item>
-        <Form.Item name={"CountryName"} label={"Country"}>
+        <Form.Item
+          name={"CountryName"}
+          label={"Country"}
+          rules={[{ required: true, message: "Country name is required" }]}
+          style={itemStyle}
+        >
           <Input placeholder={"Name"} />
         </Form.Item>
         <Button htmlType={"submit"}>Submit</Button>
-      </Form>
-    </>
+      </FormItemContainer>
+    </Form>
   );
 }

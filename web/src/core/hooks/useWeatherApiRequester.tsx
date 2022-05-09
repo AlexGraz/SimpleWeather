@@ -1,5 +1,5 @@
 import { useCallback, useMemo, useState } from "react";
-import axios, { AxiosResponse } from "axios";
+import axios, { AxiosError, AxiosResponse } from "axios";
 import { GetRequest, Result } from "code-gen/api-definitions";
 
 export function useWeatherApiRequester<T, TQuery>(
@@ -13,14 +13,19 @@ export function useWeatherApiRequester<T, TQuery>(
       setLoading(true);
 
       let config = apiConfig(query);
-      let response = await axios(config.url, {
-        method: config.method,
-        headers: {
-          Authorization: `Bearer 1f2eb11d-6fa8-41de-89f7-f0b99adedba6`,
-        },
-      });
+      try {
+        let response = await axios(config.url, {
+          method: config.method,
+          headers: {
+            Authorization: `Bearer 1f2eb11d-6fa8-41de-89f7-f0b99adedba6`,
+          },
+        });
 
-      setResponse(response);
+        setResponse(response);
+      } catch (error) {
+        setResponse((error as AxiosError<Result<T>>).response);
+      }
+
       setLoading(false);
     },
     [apiConfig]
@@ -28,7 +33,10 @@ export function useWeatherApiRequester<T, TQuery>(
 
   return useMemo(
     () => ({
-      data: response && response.data.isSuccessful ? response?.data : undefined,
+      data:
+        response && response.data.isSuccessful
+          ? response?.data.data
+          : undefined,
       error:
         response && !response.data.isSuccessful
           ? response?.data.message

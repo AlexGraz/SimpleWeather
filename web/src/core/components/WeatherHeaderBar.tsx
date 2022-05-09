@@ -4,12 +4,11 @@ import React from "react";
 import { GetWeatherConditionDescriptionQuery } from "code-gen/api-definitions";
 
 const Container = styled.div`
-  height: 4rem;
   width: 100%;
   display: flex;
-  align-items: center;
   background-color: white;
-  padding: 1rem;
+  padding: 2rem;
+  height: 6.5rem;
 `;
 
 export function WeatherHeaderBar({

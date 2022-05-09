@@ -1,6 +1,6 @@
 import { WeatherCondition } from "code-gen/api-definitions";
 import styled from "styled-components";
-import { Typography } from "antd";
+import { Spin, Typography } from "antd";
 import { WeatherVisual } from "core/components/WeatherVisual";
 
 const { Title } = Typography;
@@ -23,16 +23,20 @@ const InnerContainer = styled.div`
 
 export function WeatherBody({
   weatherCondition,
+  loading,
 }: {
+  loading: boolean | undefined;
   weatherCondition: WeatherCondition | undefined;
 }) {
   return (
     <Container>
       <InnerContainer>
-        <WeatherVisual weatherCondition={weatherCondition} />
-        <Title style={{ color: "white" }}>
-          {weatherCondition?.description}
-        </Title>
+        <Spin spinning={loading}>
+          <WeatherVisual weatherCondition={weatherCondition} />
+          <Title style={{ color: "white" }}>
+            {weatherCondition?.description}
+          </Title>
+        </Spin>
       </InnerContainer>
     </Container>
   );
