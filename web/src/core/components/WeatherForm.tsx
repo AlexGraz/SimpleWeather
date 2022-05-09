@@ -1,17 +1,15 @@
 import { Button, Form, Input } from "antd";
 import React from "react";
-import { Api } from "core/api/Api";
-import { useWeatherApiRequester } from "core/hooks/useWeatherApiRequester";
+import { GetWeatherConditionDescriptionQuery } from "code-gen/api-definitions";
 
-export function WeatherForm() {
-  const { data, getData } = useWeatherApiRequester(
-    Api.Weather.GetWeatherConditionDescription
-  );
-
+export function WeatherForm({
+  onFinish,
+}: {
+  onFinish(values: GetWeatherConditionDescriptionQuery): void;
+}) {
   return (
     <>
-      <div>{data?.data.description}</div>
-      <Form onFinish={getData}>
+      <Form onFinish={onFinish} layout={"inline"}>
         <Form.Item name={"CityName"} label={"City"}>
           <Input placeholder={"Name"} />
         </Form.Item>
