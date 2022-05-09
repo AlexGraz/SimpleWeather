@@ -1,6 +1,7 @@
 import { useCallback, useMemo, useState } from "react";
 import axios, { AxiosError, AxiosResponse } from "axios";
 import { GetRequest, Result } from "code-gen/api-definitions";
+import { API_KEY } from "core/api/Api";
 
 export function useWeatherApiRequester<T, TQuery>(
   apiConfig: (conditionDescriptionQuery: TQuery) => GetRequest<Result<T>>
@@ -17,7 +18,7 @@ export function useWeatherApiRequester<T, TQuery>(
         let response = await axios(config.url, {
           method: config.method,
           headers: {
-            Authorization: `Bearer 1f2eb11d-6fa8-41de-89f7-f0b99adedba6`,
+            Authorization: `Bearer ${API_KEY}`,
           },
         });
 
