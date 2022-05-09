@@ -27,7 +27,14 @@ public class ApiKeyAuthHandler : AuthenticationHandler<ApiKeyAuthHandlerOptions>
 
     protected override Task<AuthenticateResult> HandleAuthenticateAsync()
     {
-        var authHeader = AuthenticationHeaderValue.Parse(Request.Headers["Authorization"]);
+        var authorizationHeader = Request.Headers["Authorization"];
+
+        if (authorizationHeader.Count == 0)
+        {
+            return Task.FromResult(AuthenticateResult.Fail("Not API key found"));
+        }
+        
+        var authHeader = AuthenticationHeaderValue.Parse(authorizationHeader);
 
         var apiKey = ApiKeyStore.Keys.FirstOrDefault(k => k.Key == authHeader.Parameter);
 

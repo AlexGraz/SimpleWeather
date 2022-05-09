@@ -1,7 +1,7 @@
-﻿using System.Net.Http;
+﻿using System;
+using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
-using Castle.Core.Internal;
 using Core.Infrastructure.Util;
 using Features.Weather.Domain.Dtos;
 using Features.Weather.Domain.Queries;
@@ -32,7 +32,7 @@ public class WeatherQueryTests
         Assert.IsInstanceOf(typeof(SuccessResult<WeatherConditionDto>), result, "Return type was not SuccessResult");
         Assert.IsTrue(result.StatusCode == StatusCodes.Status200OK, "Response status code was not 200 OK");
         Assert.IsFalse(
-            result.SuccessResult().Description.IsNullOrEmpty(),
+            string.IsNullOrEmpty(result.SuccessResult().Description),
             "The response Description was blank"
         );
     }

@@ -5,8 +5,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers;
 
-[Route("api/v1/code-gen"), AllowAnonymous, NoCodeGeneration]
-public class CodeGenController : ApiControllerBase
+[Route("api/v1/code-gen"), ApiController, AllowAnonymous, NoCodeGeneration]
+public class CodeGenController : ControllerBase
 {
     [HttpGet("api-definitions.ts")]
     public IActionResult Definitions()

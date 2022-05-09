@@ -2,53 +2,47 @@
 // eslint-disable
 export interface GetRequest<TResponse> {
   url: string;
-  method: "GET";
+  method: 'GET';
 }
 export interface OptionsRequest<TResponse> {
   url: string;
-  method: "OPTIONS";
+  method: 'OPTIONS';
 }
 export interface DeleteRequest<TResponse> {
   url: string;
-  method: "DELETE";
+  method: 'DELETE';
 }
 export interface PostRequest<TRequest, TResponse> {
   data: TRequest;
   url: string;
-  method: "POST";
+  method: 'POST';
 }
 export interface PatchRequest<TRequest, TResponse> {
   data: TRequest;
   url: string;
-  method: "PATCH";
+  method: 'PATCH';
 }
 export interface PutRequest<TRequest, TResponse> {
   data: TRequest;
   url: string;
-  method: "PUT";
+  method: 'PUT';
 }
-export const toQuery = (o: { [key: string]: any }): string => {
+export const toQuery = (o: {[key: string]: any}): string => {
   const q = Object.keys(o)
-    .map((k) => ({ k, v: o[k] }))
-    .filter((x) => x.v !== undefined && x.v !== null)
-    .map((x) =>
-      Array.isArray(x.v)
-        ? x.v
-            .map((v) => `${encodeURIComponent(x.k)}=${encodeURIComponent(v)}`)
-            .join("&")
-        : `${encodeURIComponent(x.k)}=${encodeURIComponent(x.v)}`
-    )
-    .join("&");
-  return q ? `?${q}` : "";
+    .map(k => ({k, v: o[k]}))
+    .filter(x => x.v !== undefined && x.v !== null)
+    .map(x => Array.isArray(x.v)
+      ? x.v.map(v => `${encodeURIComponent(x.k)}=${encodeURIComponent(v)}`).join('&')
+      : `${encodeURIComponent(x.k)}=${encodeURIComponent(x.v)}`)
+    .join('&');
+  return q ? `?${q}` : '';
 };
 export abstract class WeatherRequestFactory {
-  static GetWeatherConditionDescription(
-    conditionDescriptionQuery: GetWeatherConditionDescriptionQuery
-  ): GetRequest<Result<WeatherCondition>> {
+  static GetWeatherConditionDescription(conditionDescriptionQuery: GetWeatherConditionDescriptionQuery): GetRequest<Result<WeatherCondition>> {
     const query = toQuery({ ...conditionDescriptionQuery });
     return {
-      method: "GET",
-      url: `/api/v1/weather${query}`,
+      method: 'GET',
+      url: `/api/v1/weather${query}`
     };
   }
 }
