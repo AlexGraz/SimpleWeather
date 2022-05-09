@@ -1,6 +1,9 @@
-﻿using System.Threading;
+﻿using System.Reflection;
+using System.Threading;
 using System.Threading.Tasks;
+using API.Controllers;
 using API.Controllers.Weather;
+using API.Infrastructure.Filters;
 using Core.Infrastructure.Util;
 using Features.Weather.Domain.Dtos;
 using Features.Weather.Domain.Queries;
@@ -13,18 +16,23 @@ namespace Test.Api.Controllers;
 
 public class WeatherControllerTests
 {
-    [Test]
-    public async Task GetWeatherConditionDescriptionQuerySuccess()
+    private WeatherController GetWeatherController(string weatherDescription = "extreme rain")
     {
-        const string weatherDescription = "very heavy rain";
-
         var mediator = new Mock<IMediator>();
         mediator
             .Setup(m => m.Send(It.IsAny<GetWeatherConditionDescriptionQuery>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync(Result<WeatherConditionDto>.Success(new WeatherConditionDto(weatherDescription)))
             .Verifiable("WeatherConditionDto was not sent");
         
-        var controller = new WeatherController(mediator.Object);
+        return new WeatherController(mediator.Object);
+    }
+    
+    [Test]
+    public async Task GetWeatherConditionDescriptionQuerySuccess()
+    {
+        const string weatherDescription = "very heavy rain";
+        
+        var controller = GetWeatherController(weatherDescription);
         var result = await controller.GetWeatherConditionDescription(new GetWeatherConditionDescriptionQuery("Brisbane", "Australia"));
 
         Assert.IsInstanceOf(typeof(SuccessResult<WeatherConditionDto>), result, "Return type was not SuccessResult");
@@ -33,5 +41,15 @@ public class WeatherControllerTests
             result.SuccessResult().Description == weatherDescription,
             "Description is different from expected"
         );
+    }
+    
+    [Test]
+    public void ControllerSetup()
+    {
+        var result = GetWeatherController();
+        Assert.IsInstanceOf(typeof(ApiControllerBase), result, "WeatherController not an instance of ApiControllerBase");
+
+        var attribute = typeof(WeatherController).GetCustomAttribute(typeof(RateLimit));
+        Assert.IsNotNull(attribute, "RateLimit not found on WeatherController");
     }
 }

@@ -1,4 +1,4 @@
-using API.Infrastructure.Authentication.Constants;
+using API.Infrastructure.Authentication.Handlers;
 using Microsoft.AspNetCore.Authorization;
 
 namespace API.Infrastructure.Authentication.Attributes;
@@ -8,6 +8,6 @@ public class AuthorizeApiKey : AuthorizeAttribute
 {
     public AuthorizeApiKey()
     {
-        AuthenticationSchemes = AuthScheme.ApiKey;
+        AuthenticationSchemes = ApiKeyAuthHandler.SchemeName;
     }
 }

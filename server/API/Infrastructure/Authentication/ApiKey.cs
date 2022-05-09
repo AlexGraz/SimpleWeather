@@ -6,10 +6,10 @@ public class ApiKey
     public int RequestCount { get; private set; }
     public DateTime? FirstRequestDateTime { get; private set; }
 
-    public readonly int RequestLimitPeriodHours;
+    public readonly double RequestLimitPeriodHours;
     public readonly int RequestLimit;
 
-    public ApiKey(string key, int requestLimit, int requestLimitPeriodHours)
+    public ApiKey(string key, int requestLimit, double requestLimitPeriodHours)
     {
         Key = key;
         RequestLimitPeriodHours = requestLimitPeriodHours;

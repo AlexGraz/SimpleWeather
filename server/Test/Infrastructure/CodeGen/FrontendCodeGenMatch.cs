@@ -2,7 +2,7 @@
 using API.Infrastructure.CodeGen;
 using NUnit.Framework;
 
-namespace Test.CodeGen;
+namespace Test.Infrastructure.CodeGen;
 
 public class FrontendCodeGenApi
 {

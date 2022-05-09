@@ -9,6 +9,8 @@ namespace API.Infrastructure.Authentication.Handlers;
 
 public class ApiKeyAuthHandler : AuthenticationHandler<ApiKeyAuthHandlerOptions>
 {
+    public const string SchemeName = "ApiKey";
+
     public ApiKeyAuthHandler(
         IOptionsMonitor<ApiKeyAuthHandlerOptions> options,
         ILoggerFactory logger,

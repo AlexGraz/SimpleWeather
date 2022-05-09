@@ -1,4 +1,3 @@
-using API.Infrastructure.Authentication.Constants;
 using API.Infrastructure.Authentication.Handlers;
 using Features.Weather.Infrastructure;
 using MediatR;
@@ -7,8 +6,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Services.AddAuthentication(AuthScheme.ApiKey)
-    .AddScheme<ApiKeyAuthHandlerOptions, ApiKeyAuthHandler>(AuthScheme.ApiKey, null);
+builder.Services.AddAuthentication()
+    .AddScheme<ApiKeyAuthHandlerOptions, ApiKeyAuthHandler>(ApiKeyAuthHandler.SchemeName, null);
 
 builder.Services.AddControllers();
 builder.Services.AddMediatR(AppDomain.CurrentDomain.GetAssemblies());
