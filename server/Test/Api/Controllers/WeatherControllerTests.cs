@@ -3,6 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using API.Controllers;
 using API.Controllers.Weather;
+using API.Infrastructure.Authentication.Attributes;
 using API.Infrastructure.Filters;
 using Core.Infrastructure.Util;
 using Features.Weather.Domain.Dtos;
@@ -44,12 +45,15 @@ public class WeatherControllerTests
     }
     
     [Test]
-    public void ControllerSetup()
+    public void ControllerCorrectAttributes()
     {
         var result = GetWeatherController();
         Assert.IsInstanceOf(typeof(ApiControllerBase), result, "WeatherController not an instance of ApiControllerBase");
 
         var attribute = typeof(WeatherController).GetCustomAttribute(typeof(RateLimit));
         Assert.IsNotNull(attribute, "RateLimit not found on WeatherController");
+        
+        attribute = typeof(WeatherController).GetCustomAttribute(typeof(AuthorizeApiKey));
+        Assert.IsNotNull(attribute, "AuthorizeApiKey not found on WeatherController");
     }
 }

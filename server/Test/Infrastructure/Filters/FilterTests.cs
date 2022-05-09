@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
-using System.Threading.Tasks;
 using API.Infrastructure.Authentication;
 using API.Infrastructure.Authentication.Handlers;
 using API.Infrastructure.Filters;
@@ -18,7 +17,8 @@ namespace Test.Infrastructure.Filters;
 
 public class FilterTests
 {
-    private static ActionExecutingContext CreateActionExecutingContext(string apiKey, int requestLimit, double requestLimitPeriodHours)
+    private static ActionExecutingContext CreateActionExecutingContext(string apiKey, int requestLimit,
+        double requestLimitPeriodHours)
     {
         var options = new ApiKeyAuthHandlerOptions();
         ApiKeyStore.InitKeys(
@@ -52,27 +52,29 @@ public class FilterTests
             new Mock<Controller>().Object
         );
     }
-    
+
     [Test]
     public void RateLimitOneRequestTest()
     {
         const int requestLimit = 5;
 
-        var context = CreateActionExecutingContext(new ApiKeyAuthHandlerOptions().ApiKeys.First(), requestLimit, ApiKeyAuthHandlerOptions.DefaultRequestLimitPeriodHours);
+        var context = CreateActionExecutingContext(new ApiKeyAuthHandlerOptions().ApiKeys.First(), requestLimit,
+            RateLimit.DefaultRequestLimitPeriodHours);
         var rateLimit = new RateLimit();
         rateLimit.OnActionExecuting(context);
 
         Assert.IsNull(context.Result);
     }
-    
+
     [Test]
     public void RateLimitOverLimitTest()
     {
         const int requestLimit = 5;
 
-        var context = CreateActionExecutingContext(new ApiKeyAuthHandlerOptions().ApiKeys.First(), requestLimit, ApiKeyAuthHandlerOptions.DefaultRequestLimitPeriodHours);
+        var context = CreateActionExecutingContext(new ApiKeyAuthHandlerOptions().ApiKeys.First(), requestLimit,
+            RateLimit.DefaultRequestLimitPeriodHours);
         var rateLimit = new RateLimit();
-        
+
         for (var i = 0; i < requestLimit + 1; i++)
         {
             rateLimit.OnActionExecuting(context);
@@ -80,16 +82,17 @@ public class FilterTests
 
         Assert.IsNotNull(context.Result);
     }
-    
+
     [Test]
-    public async Task RateLimitZeroHourTest()
+    public void RateLimitZeroHourTest()
     {
         const int requestLimit = 1;
         const double requestLimitPeriodHours = 0;
 
-        var context = CreateActionExecutingContext(new ApiKeyAuthHandlerOptions().ApiKeys.First(), requestLimit, requestLimitPeriodHours);
+        var context = CreateActionExecutingContext(new ApiKeyAuthHandlerOptions().ApiKeys.First(), requestLimit,
+            requestLimitPeriodHours);
         var rateLimit = new RateLimit();
-        
+
         for (var i = 0; i < requestLimit + 5; i++)
         {
             rateLimit.OnActionExecuting(context);
