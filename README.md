@@ -5,6 +5,7 @@ Simple weather app that displays the weather condition from OpenWeatherMap
 # Requirements
 
 .NET 6
+
 Node (>16.15)
 
 ## Usage
