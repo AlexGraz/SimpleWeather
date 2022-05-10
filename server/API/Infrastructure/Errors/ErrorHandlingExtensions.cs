@@ -27,12 +27,7 @@ public static class ErrorHandlingExtensions
                 }
 
                 var result = Result<Unit>.Fail(message, StatusCodes.Status500InternalServerError);
-                var serializedResponse = JsonSerializer.Serialize(result, new JsonSerializerOptions
-                {
-                    PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-                    WriteIndented = true
-                });
-                await context.Response.WriteAsync(serializedResponse);
+                await context.Response.WriteAsync(result.Serialize());
             });
         });
     }

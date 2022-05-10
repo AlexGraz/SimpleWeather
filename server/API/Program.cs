@@ -1,3 +1,4 @@
+using API.Infrastructure.Authentication;
 using API.Infrastructure.Authentication.Handlers;
 using API.Infrastructure.Errors;
 using Features.Weather.Infrastructure;
@@ -30,6 +31,8 @@ if (!isDev)
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseRouting();
+
+app.UseUnauthorizedResponse();
 
 app.UseAuthentication();
 app.UseAuthorization();

@@ -28,22 +28,22 @@ public class ApiKeyAuthHandler : AuthenticationHandler<ApiKeyAuthHandlerOptions>
         );
     }
 
-    protected override Task<AuthenticateResult> HandleAuthenticateAsync()
+    protected override async Task<AuthenticateResult> HandleAuthenticateAsync()
     {
         var authorizationHeader = Request.Headers["Authorization"];
 
         if (authorizationHeader.Count == 0)
         {
-            return Task.FromResult(AuthenticateResult.Fail("Not API key found"));
+            return await Task.FromResult(AuthenticateResult.Fail("Missing Authorization Header"));
         }
-        
+
         var authHeader = AuthenticationHeaderValue.Parse(authorizationHeader);
 
         var apiKey = ApiKeyStore.Keys.FirstOrDefault(k => k.Key == authHeader.Parameter);
 
         if (apiKey == null)
         {
-            return Task.FromResult(AuthenticateResult.Fail("Invalid API key"));
+            return await Task.FromResult(AuthenticateResult.Fail("Invalid API key"));
         }
 
         var identity = new ClaimsIdentity(Scheme.Name);
@@ -52,6 +52,6 @@ public class ApiKeyAuthHandler : AuthenticationHandler<ApiKeyAuthHandlerOptions>
         var principal = new GenericPrincipal(identity, null);
         var ticket = new AuthenticationTicket(principal, Scheme.Name);
 
-        return Task.FromResult(AuthenticateResult.Success(ticket));
+        return await Task.FromResult(AuthenticateResult.Success(ticket));
     }
 }
