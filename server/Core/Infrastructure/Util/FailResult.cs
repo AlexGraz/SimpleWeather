@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using System.Text.Json.Serialization;
+using Microsoft.AspNetCore.Http;
 using TeeSquare.UnionTypes;
 
 namespace Core.Infrastructure.Util;
@@ -7,7 +8,7 @@ public class FailResult<TSuccess> : Result<TSuccess>
 {
     [AsConst(false)]
     public override bool IsSuccessful => false;
-    public string Message { get; }
+    public string Message { get; private set;  }
 
     public FailResult(string message): base(StatusCodes.Status400BadRequest)
     {
