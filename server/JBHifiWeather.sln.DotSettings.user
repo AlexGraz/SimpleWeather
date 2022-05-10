@@ -1,13 +1,17 @@
 ﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
 	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=0dfc6fce_002De6a7_002D414b_002D8c9f_002D2e7c4935e2c8/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="ValidApiKey #2" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
-  &lt;TestAncestor&gt;&#xD;
-    &lt;TestId&gt;NUnit3x::E2AFBA0D-B653-49D9-A086-BB7DF9500EAC::net6.0::Test.Infrastructure.Authentication.AuthenticationTests&lt;/TestId&gt;&#xD;
-    &lt;TestId&gt;NUnit3x::E2AFBA0D-B653-49D9-A086-BB7DF9500EAC::net6.0::Test.Infrastructure.Filters.FilterTests.RateLimitTest&lt;/TestId&gt;&#xD;
-    &lt;TestId&gt;NUnit3x::E2AFBA0D-B653-49D9-A086-BB7DF9500EAC::net6.0::Test.Infrastructure.Filters.FilterTests.RateLimitSixRequestTest&lt;/TestId&gt;&#xD;
-  &lt;/TestAncestor&gt;&#xD;
+  &lt;Project Location="C:\Users\cousi\RiderProjects\JBHifiWeather\server\Test" Presentation="&amp;lt;Test&amp;gt;" /&gt;&#xD;
 &lt;/SessionState&gt;</s:String>
 	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=30b1b708_002D73e4_002D4b50_002Da198_002Dc39ce5afc0f0/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="All tests from &amp;lt;Test&amp;gt;" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
   &lt;Project Location="C:\Users\cousi\RiderProjects\JBHifiWeather\server\Test" Presentation="&amp;lt;Test&amp;gt;" /&gt;&#xD;
+&lt;/SessionState&gt;</s:String>
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=33cc0317_002Dd025_002D458d_002D9f0b_002D62f6b3307af4/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="RateLimitZeroHourTest" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;TestAncestor&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::E2AFBA0D-B653-49D9-A086-BB7DF9500EAC::net6.0::Test.Infrastructure.Filters.FilterTests.RateLimitZeroHourTest&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::E2AFBA0D-B653-49D9-A086-BB7DF9500EAC::net6.0::Test.Infrastructure.Filters.FilterTests.RateLimitOneRequestTest&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::E2AFBA0D-B653-49D9-A086-BB7DF9500EAC::net6.0::Test.Infrastructure.Filters.FilterTests.RateLimitOverLimitTest&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::E2AFBA0D-B653-49D9-A086-BB7DF9500EAC::net6.0::Test.Infrastructure.Authentication.AuthenticationTests&lt;/TestId&gt;&#xD;
+  &lt;/TestAncestor&gt;&#xD;
 &lt;/SessionState&gt;</s:String>
 	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=58fd6495_002D1c57_002D45e6_002D98af_002Dde362178eaf7/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="All tests from &amp;lt;Test&amp;gt; #2" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
   &lt;Project Location="C:\Users\cousi\RiderProjects\JBHifiWeather\server\Test" Presentation="&amp;lt;Test&amp;gt;" /&gt;&#xD;
@@ -17,6 +21,6 @@
     &lt;TestId&gt;NUnit3x::E2AFBA0D-B653-49D9-A086-BB7DF9500EAC::net6.0::Test.Infrastructure.Authentication.AuthenticationTests.ValidApiKey&lt;/TestId&gt;&#xD;
   &lt;/TestAncestor&gt;&#xD;
 &lt;/SessionState&gt;</s:String>
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=7a518561_002Daecb_002D477d_002D84f0_002D8a92ea121cf9/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="FilterTests" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=7a518561_002Daecb_002D477d_002D84f0_002D8a92ea121cf9/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="FilterTests" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
   &lt;Project Location="C:\Users\cousi\RiderProjects\JBHifiWeather\server\Test" Presentation="&amp;lt;Test&amp;gt;" /&gt;&#xD;
 &lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>

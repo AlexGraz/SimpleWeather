@@ -15,6 +15,7 @@ builder.Services.AddControllers();
 builder.Services.AddMediatR(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddHttpClient();
 builder.Services.AddTransient<IWeatherService, WeatherService>();
+ApiKeyStore.InitKeys(builder.Configuration);
 
 var app = builder.Build();
 

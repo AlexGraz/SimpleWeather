@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using API.Infrastructure.Authentication;
@@ -17,21 +18,24 @@ namespace Test.Infrastructure.Filters;
 
 public class FilterTests
 {
-    private static ActionExecutingContext CreateActionExecutingContext(string apiKey, int requestLimit,
-        double requestLimitPeriodHours)
+    [SetUp]
+    public void Init()
     {
-        var options = new ApiKeyAuthHandlerOptions();
         ApiKeyStore.InitKeys(
-            options.ApiKeys,
-            requestLimit,
-            requestLimitPeriodHours
+            Array.Empty<string>(),
+            1,
+            5
         );
+    }
+
+    private static ActionExecutingContext CreateActionExecutingContext(ApiKey key)
+    {
+        ApiKeyStore.AddKey(key);
 
         var httpContext = new DefaultHttpContext();
-
         var claims = new List<Claim>
         {
-            new(ClaimTypes.NameIdentifier, apiKey)
+            new(ClaimTypes.NameIdentifier, key.Key)
         };
 
         var appIdentity = new ClaimsIdentity(claims);
@@ -56,10 +60,14 @@ public class FilterTests
     [Test]
     public void RateLimitOneRequestTest()
     {
+        const string apiTestKey = "1f2eb11d-6fa8-41de-89f7-f0b99adedba6";
         const int requestLimit = 5;
+        const int requestLimitPeriodHours = 1;
 
-        var context = CreateActionExecutingContext(new ApiKeyAuthHandlerOptions().ApiKeys.First(), requestLimit,
-            RateLimit.DefaultRequestLimitPeriodHours);
+        var context = CreateActionExecutingContext(
+            new ApiKey(apiTestKey, requestLimit, requestLimitPeriodHours)
+        );
+        
         var rateLimit = new RateLimit();
         rateLimit.OnActionExecuting(context);
 
@@ -69,10 +77,14 @@ public class FilterTests
     [Test]
     public void RateLimitOverLimitTest()
     {
+        const string apiTestKey = "51c836f3-467c-40b5-a4bc-7f4d395c1abf";
         const int requestLimit = 5;
+        const int requestLimitPeriodHours = 1;
 
-        var context = CreateActionExecutingContext(new ApiKeyAuthHandlerOptions().ApiKeys.First(), requestLimit,
-            RateLimit.DefaultRequestLimitPeriodHours);
+        var context = CreateActionExecutingContext(
+            new ApiKey(apiTestKey, requestLimit, requestLimitPeriodHours)
+        );
+
         var rateLimit = new RateLimit();
 
         for (var i = 0; i < requestLimit + 1; i++)
@@ -86,11 +98,14 @@ public class FilterTests
     [Test]
     public void RateLimitZeroHourTest()
     {
+        const string apiTestKey = "c30e5dfa-f257-476c-b54b-a46f414e4f03";
         const int requestLimit = 1;
         const double requestLimitPeriodHours = 0;
 
-        var context = CreateActionExecutingContext(new ApiKeyAuthHandlerOptions().ApiKeys.First(), requestLimit,
-            requestLimitPeriodHours);
+        var context = CreateActionExecutingContext(
+            new ApiKey(apiTestKey, requestLimit, requestLimitPeriodHours)
+        );
+
         var rateLimit = new RateLimit();
 
         for (var i = 0; i < requestLimit + 5; i++)

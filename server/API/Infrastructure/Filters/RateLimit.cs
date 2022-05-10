@@ -8,9 +8,6 @@ namespace API.Infrastructure.Filters;
 
 public class RateLimit : ActionFilterAttribute 
 {
-    public const int DefaultRequestLimit = 5;
-    public const int DefaultRequestLimitPeriodHours = 1;
-    
     public override void OnActionExecuting(ActionExecutingContext context)
     {
         var apiKeyValue = context.HttpContext.User.FindFirst(c => c.Type == ClaimTypes.NameIdentifier)?.Value;

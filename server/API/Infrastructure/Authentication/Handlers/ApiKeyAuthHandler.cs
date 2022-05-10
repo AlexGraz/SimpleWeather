@@ -2,11 +2,14 @@
 using System.Security.Claims;
 using System.Security.Principal;
 using System.Text.Encodings.Web;
-using API.Infrastructure.Filters;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.Extensions.Options;
 
 namespace API.Infrastructure.Authentication.Handlers;
+
+public class ApiKeyAuthHandlerOptions : AuthenticationSchemeOptions
+{
+}
 
 public class ApiKeyAuthHandler : AuthenticationHandler<ApiKeyAuthHandlerOptions>
 {
@@ -19,13 +22,6 @@ public class ApiKeyAuthHandler : AuthenticationHandler<ApiKeyAuthHandlerOptions>
         ISystemClock clock
     ) : base(options, logger, encoder, clock)
     {
-        if (ApiKeyStore.Keys.Length != 0) return;
-        var apiKeyOptions = options.CurrentValue;
-        ApiKeyStore.InitKeys(
-            apiKeyOptions.ApiKeys,
-            RateLimit.DefaultRequestLimit,
-            RateLimit.DefaultRequestLimitPeriodHours
-        );
     }
 
     protected override async Task<AuthenticateResult> HandleAuthenticateAsync()
