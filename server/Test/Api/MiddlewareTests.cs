@@ -1,5 +1,4 @@
 ﻿using System.IO;
-using System.Text.Json;
 using System.Threading.Tasks;
 using API.Infrastructure.Authentication;
 using Core.Infrastructure.Util;
@@ -23,7 +22,7 @@ public class MiddlewareTests
             }
         };
 
-        AuthResponseMiddleware.Use(context, () => Task.CompletedTask);
+        AuthResponseMiddleware.WriteResponse(context);
 
         context.Response.Body.Seek(0, SeekOrigin.Begin);
         var reader = new StreamReader(context.Response.Body);

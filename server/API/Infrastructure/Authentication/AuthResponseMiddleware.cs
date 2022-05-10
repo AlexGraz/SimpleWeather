@@ -8,13 +8,15 @@ public static class AuthResponseMiddleware
 {
     public static IApplicationBuilder UseUnauthorizedResponse(this WebApplication app)
     {
-        return app.Use(async (context, next) => { Use(context, next); });
+        return app.Use(async (context, next) =>
+        {
+            await next();
+            WriteResponse(context);
+        });
     }
 
-    public static async void Use(HttpContext context, Func<Task> next)
+    public static async void WriteResponse(HttpContext context)
     {
-        await next();
-
         if (context.Response.StatusCode != StatusCodes.Status401Unauthorized) return;
         context.Response.ContentType = MediaTypeNames.Application.Json;
 
