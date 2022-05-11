@@ -1,7 +1,8 @@
 import { WeatherCondition } from "code-gen/api-definitions";
 import styled from "styled-components";
-import { Spin, Typography } from "antd";
+import { Typography } from "antd";
 import { WeatherVisual } from "core/components/WeatherVisual";
+import { LoadingSpinner } from "core/components/LoadingSpinner";
 
 const { Title } = Typography;
 
@@ -30,7 +31,7 @@ export function WeatherBody({
 }) {
   return (
     <Container>
-      <Spin spinning={loading} size={"large"}>
+      <LoadingSpinner spinning={loading} size={"large"}>
         <InnerContainer>
           <WeatherVisual weatherCondition={weatherCondition} />
           <Title
@@ -39,7 +40,7 @@ export function WeatherBody({
             {weatherCondition?.description}
           </Title>
         </InnerContainer>
-      </Spin>
+      </LoadingSpinner>
     </Container>
   );
 }
