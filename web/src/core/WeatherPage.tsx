@@ -21,7 +21,7 @@ export function WeatherPage() {
 
   return (
     <Container>
-      <WeatherHeaderBar onFinish={getData} />
+      <WeatherHeaderBar onSubmit={getData} />
       <ErrorMessage error={error} />
       <WeatherBody weatherCondition={data} loading={loading} />
     </Container>

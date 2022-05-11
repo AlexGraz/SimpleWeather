@@ -12,13 +12,13 @@ const Container = styled.div`
 `;
 
 export function WeatherHeaderBar({
-  onFinish,
+  onSubmit,
 }: {
-  onFinish(values: GetWeatherConditionDescriptionQuery): void;
+  onSubmit(values: GetWeatherConditionDescriptionQuery): void;
 }) {
   return (
     <Container>
-      <WeatherForm onFinish={onFinish} />
+      <WeatherForm onSubmit={onSubmit} />
     </Container>
   );
 }

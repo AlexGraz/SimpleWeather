@@ -1,5 +1,5 @@
 import { WeatherCondition } from "code-gen/api-definitions";
-import { WeatherConditionDescriptionsIcons } from "core/components/WeatherConditionDescriptionsIcons";
+import { WeatherConditionDescriptionsIcons } from "core/components/icons/WeatherConditionDescriptionsIcons";
 import { useMemo } from "react";
 
 export function WeatherVisual({

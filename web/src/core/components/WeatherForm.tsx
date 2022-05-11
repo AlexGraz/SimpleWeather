@@ -9,14 +9,14 @@ const FormItemContainer = styled.div`
 `;
 
 export function WeatherForm({
-  onFinish,
+  onSubmit,
 }: {
-  onFinish(values: GetWeatherConditionDescriptionQuery): void;
+  onSubmit(values: GetWeatherConditionDescriptionQuery): void;
 }) {
   const itemStyle = { margin: 0, width: "20rem" };
 
   return (
-    <Form onFinish={onFinish} layout={"inline"}>
+    <Form onFinish={onSubmit} layout={"inline"}>
       <FormItemContainer>
         <Form.Item
           name={"CityName"}
