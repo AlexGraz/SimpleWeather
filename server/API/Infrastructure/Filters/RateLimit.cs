@@ -15,7 +15,7 @@ public class RateLimit : ActionFilterAttribute
         
         if (apiKey.IsRateLimited())
         {
-            context.Result = Result<Unit>.Fail("API request limit reached", StatusCodes.Status429TooManyRequests);
+            context.Result = Result.Fail("API request limit reached", StatusCodes.Status429TooManyRequests);
         }
     }
 }

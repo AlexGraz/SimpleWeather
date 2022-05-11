@@ -20,7 +20,7 @@ public static class AuthResponseMiddleware
         if (context.Response.StatusCode != StatusCodes.Status401Unauthorized) return;
         context.Response.ContentType = MediaTypeNames.Application.Json;
 
-        var result = Result<Unit>.Fail("Unauthorised", StatusCodes.Status401Unauthorized);
+        var result = Result.Fail("Unauthorised", StatusCodes.Status401Unauthorized);
         var response = result.Serialize();
         await context.Response.WriteAsync(response);
     }

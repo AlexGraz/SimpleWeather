@@ -41,15 +41,15 @@ public class OpenWeatherService : IWeatherService
         {
             return e.StatusCode switch
             {
-                HttpStatusCode.NotFound => Result<Unit>.Fail(
+                HttpStatusCode.NotFound => Result.Fail(
                     "City and Country not found, please try again",
                     StatusCodes.Status404NotFound
                 ),
-                HttpStatusCode.BadRequest => Result<Unit>.Fail(
+                HttpStatusCode.BadRequest => Result.Fail(
                     "An invalid request was sent to OpenWeather",
                     StatusCodes.Status400BadRequest
                 ),
-                _ => Result<Unit>.Fail(
+                _ => Result.Fail(
                     "An unknown error occured",
                     e.StatusCode == null ? StatusCodes.Status500InternalServerError : (int)e.StatusCode
                 )

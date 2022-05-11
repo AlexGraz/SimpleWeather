@@ -3,13 +3,16 @@ using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TeeSquare.UnionTypes;
+using JetBrains.Annotations;
 
 namespace Core.Infrastructure.Util;
 
 [UnionType(typeof(SuccessResult<>), typeof(FailResult<>))]
-public class Result<TSuccess> : ActionResult
+public class Result<TSuccess> : Result
 {
     public int? StatusCode { get; }
+    
+    [UsedImplicitly]
     public virtual bool IsSuccessful { get; }
 
     protected Result(int statusCode)
@@ -25,26 +28,6 @@ public class Result<TSuccess> : ActionResult
         };
 
         objectResult.ExecuteResultAsync(context);
-    }
-
-    public static Result<T> Success<T>(T value)
-    {
-        return new SuccessResult<T>(value);
-    }
-
-    public static Result<T> Success<T>(T value, int statusCode)
-    {
-        return new SuccessResult<T>(value, statusCode);
-    }
-
-    public static FailResult<Unit> Fail(string message, int statusCode)
-    {
-        return new FailResult<Unit>(message, statusCode);
-    }
-
-    public static Result<T> Fail<T>(string message)
-    {
-        return new FailResult<T>(message);
     }
 
     public static implicit operator Result<TSuccess>(FailResult<Unit> failure)

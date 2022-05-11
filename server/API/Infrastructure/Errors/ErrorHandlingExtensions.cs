@@ -1,7 +1,5 @@
 ﻿using System.Net.Mime;
-using System.Text.Json;
 using Core.Infrastructure.Util;
-using MediatR;
 using Microsoft.AspNetCore.Diagnostics;
 
 namespace API.Infrastructure.Errors;
@@ -26,7 +24,7 @@ public static class ErrorHandlingExtensions
                     message = exceptionHandlerPathFeature?.Error.Message ?? "An unknown error occured";
                 }
 
-                var result = Result<Unit>.Fail(message, StatusCodes.Status500InternalServerError);
+                var result = Result.Fail(message, StatusCodes.Status500InternalServerError);
                 await context.Response.WriteAsync(result.Serialize());
             });
         });

@@ -28,7 +28,7 @@ public class MiddlewareTests
         var reader = new StreamReader(context.Response.Body);
         var text = await reader.ReadToEndAsync();
 
-        Assert.IsTrue(text == Result<Unit>.Fail("Unauthorised", StatusCodes.Status401Unauthorized).Serialize(),
+        Assert.IsTrue(text == Result.Fail("Unauthorised", StatusCodes.Status401Unauthorized).Serialize(),
             "Return from middleware did not match expected");
     }
 }
