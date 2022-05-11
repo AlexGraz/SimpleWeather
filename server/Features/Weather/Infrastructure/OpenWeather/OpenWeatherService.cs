@@ -42,7 +42,7 @@ public class OpenWeatherService : IWeatherService
             return e.StatusCode switch
             {
                 HttpStatusCode.NotFound => Result.Fail(
-                    "City and Country not found, please try again",
+                    "City and/or country not found, please try again",
                     StatusCodes.Status404NotFound
                 ),
                 HttpStatusCode.BadRequest => Result.Fail(
